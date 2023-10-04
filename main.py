@@ -46,13 +46,12 @@ if __name__ == "__main__":
         
     yuque = YuQueMain(yuque_token, user_agent, cookies)
 
-    # main()
     # -------------------> 保存所有仓库
-    # save_all_repos()
+    yuque.save_all_repos()
 
     # -------------------> 保存单个仓库
     # yuque.save_repo("icheima/stc8h")
-    yuque.save_repo("icheima/python")
+    # yuque.save_repo("icheima/python")
 
     # -------------------> 保存单个文档
     # yuque.save_doc("icheima/python", "dev_pygame_snake")
