@@ -2,22 +2,6 @@ from yuque.yuque_main import YuQueMain
 import os
 import yaml
 
-
-def main():
-    yuque = YuQueMain()
-    # session.get_repo_list(is_print=True)
-    # repo_detail = session.get_repo_detail("icheima/python", is_print=True)
-    repo_detail = yuque.get_repo_detail("icheima/th7wl6", is_print=True)
-    # 将data/toc_yml保存到repo/toc.yml
-    if not os.path.exists("repos"):
-        os.mkdir("repos")
-    with open("repos/toc1.yml", "w", encoding="utf-8") as f:
-        f.write(repo_detail["data"]["toc_yml"])
-
-    # yuque.session.get_repo_docs("icheima/python", is_print=True)
-    # yuque.session.get_doc_detail("icheima/python", slug="ow538zuoobsoi2ha", is_print=True)
-    # yuque.session.get_doc_detail("icheima/python", slug="pip", is_print=True)
-
 tips = """请先在secret.yaml中, 按照如下格式配置好YUQUE_TOKEN，USER_AGENT，COOKIES
 YUQUE_TOKEN: "xxx"
 USER_AGENT: "xxx"

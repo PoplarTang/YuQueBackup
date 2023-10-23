@@ -45,6 +45,7 @@ class YuQueSession(requests.Session):
         url = self.URL_BASE + self.URL_REPOS
         resp = self.get(url)
         if resp.status_code != 200:
+            print("url: %s" % url)
             raise Exception("get repo list failed, status_code: %s" % resp.status_code)
 
         if is_print:
