@@ -55,7 +55,7 @@ class Ui_SettingsDialog(object):
 
     def retranslateUi(self, SettingsDialog):
         _translate = QtCore.QCoreApplication.translate
-        SettingsDialog.setWindowTitle(_translate("SettingsDialog", "Dialog"))
+        SettingsDialog.setWindowTitle(_translate("SettingsDialog", "语雀账户配置"))
         self.label_token_2.setText(_translate("SettingsDialog", "ACCESS_TOKEN："))
         self.edit_token.setPlaceholderText(_translate("SettingsDialog", "必填"))
         self.label_agent.setText(_translate("SettingsDialog", "USER_AGENT："))
