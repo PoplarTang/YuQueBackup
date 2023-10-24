@@ -90,9 +90,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.btn_repo_download)
         self.horizontalLayout_2.setStretch(0, 1)
         self.verticalLayout_4.addLayout(self.horizontalLayout_2)
-        self.lv_repo = QtWidgets.QListView(self.tab_2)
-        self.lv_repo.setObjectName("lv_repo")
-        self.verticalLayout_4.addWidget(self.lv_repo)
+        self.tv_repo = QtWidgets.QTableView(self.tab_2)
+        self.tv_repo.setObjectName("tv_repo")
+        self.verticalLayout_4.addWidget(self.tv_repo)
         self.tabWidget.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -144,7 +144,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "语雀备份助手"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "语雀备份助手v1.0 - PoplarTang"))
         self.groupBox.setTitle(_translate("MainWindow", "语雀账户配置"))
         self.btn_config.setText(_translate("MainWindow", "进行配置"))
         self.label_2.setText(_translate("MainWindow", "（必填）USER_AGENT："))

@@ -2,4 +2,6 @@
 /repos
 /docs
 /backup
+/build
+/dist
 __pycache__/

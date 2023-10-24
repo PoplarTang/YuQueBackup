@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>语雀备份助手</string>
+   <string>语雀备份助手v1.0 - PoplarTang</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resource.qrc">
@@ -149,7 +149,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QListView" name="lv_repo"/>
+         <widget class="QTableView" name="tv_repo"/>
         </item>
        </layout>
       </widget>

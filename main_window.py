@@ -9,6 +9,7 @@ from settings_dialog import SettingsDialog
 import sys
 import store
 from yuque.yuque_main import YuQueMain
+from utils.qt_worker import Worker
 
 
 class MainWindow(QMainWindow):
@@ -30,6 +31,13 @@ class MainWindow(QMainWindow):
         self.ui.tv_all.setModel(self.repo_all_model)
         # 设置表格列宽权重
         header = self.ui.tv_all.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.Stretch)
+        header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        
+        self.doc_lst_model = QStandardItemModel()
+        self.doc_lst_model.setHorizontalHeaderLabels(["文档名", "slug"])
+        self.ui.tv_repo.setModel(self.doc_lst_model)
+        header = self.ui.tv_repo.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.Stretch)
         header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
 
@@ -97,11 +105,89 @@ class MainWindow(QMainWindow):
 
         return True
 
+    def load_repo(self):
+        if not self.check_access_info():
+            return
+        
+        namespace = self.get_repo_namespace()
+        if namespace is None:
+            return
+        
+        try:
+            yuque = YuQueMain(self.access_token, self.user_agent)
+            yuque.log_signal = self.log_update_signal
+            # 获取仓库文档列表
+            docs_list = yuque.session.get_repo_docs(namespace)
+            docs_list_data = docs_list["data"]
+            
+            self.doc_lst_model.removeRows(0, self.doc_lst_model.rowCount())
+            for doc in docs_list_data:
+                # id, slug, title
+                doc_id, slug, title = doc["id"], doc["slug"], doc["title"]
+                # doc_detail = self.session.get_doc_detail(namespace, slug)
+                print(doc_id, slug, title)
+                self.doc_lst_model.appendRow(
+                    [QStandardItem(title), QStandardItem(slug)]
+                )
+        except Exception as e:
+            self.log_update_signal.emit(str(e))
+        else:
+            self.log_update_signal.emit("仓库文档加载完毕")
+        
+    def download_repo_worker(self, worker: Worker, namespace: str):
+        yuque = YuQueMain(self.access_token, self.user_agent)
+        yuque.log_signal = self.log_update_signal
+        yuque.save_repo(namespace)
+        
+    def download_repo(self):
+        if not self.check_access_info():
+            return
+        
+        namespace = self.get_repo_namespace()
+        if namespace is None:
+            return
+        
+        self.log_update_signal.emit(f"开始下载{namespace}仓库文档")
+        self.statusBar().showMessage(f"开始下载{namespace}仓库文档")
+        
+        self.ui.btn_repo_download.setEnabled(False)
+        
+        worker = Worker(self.download_repo_worker, args=(namespace,))
+        worker.signal_connect(finished_handler=lambda: self.ui.btn_repo_download.setEnabled(True))
+        worker.start()
+
+    def get_repo_namespace(self):
+        repo_path = self.ui.edit_repo.text()
+        repo_path = repo_path.strip()
+        if repo_path == "":
+            QMessageBox.warning(self, "警告", "仓库路径不能为空")
+            self.log_update_signal.emit("仓库路径不能为空")
+            return
+        
+        if repo_path.startswith("http"):
+            # 截取https://www.yuque.com/yuque/developer/high_level_api中的yuque/developer
+            namespace = "/".join(repo_path.split("/")[3:5])
+        else:
+            namespace = repo_path
+        return namespace
+
+    def load_doc(self):
+        self.statusBar().showMessage("暂不支持加载文档")
+        QMessageBox.warning(self, "警告", "暂不支持加载文档")
+        
+    def download_doc(self):
+        self.statusBar().showMessage("暂不支持下载文档")
+        QMessageBox.warning(self, "警告", "暂不支持下载文档")
+
     def init_ui(self):
         self.update_config_state()
         self.ui.btn_config.clicked.connect(self.show_config)
         self.ui.btn_all_load.clicked.connect(self.load_all)
         self.ui.btn_all_download.clicked.connect(self.download_all)
+        self.ui.btn_repo_load.clicked.connect(self.load_repo)
+        self.ui.btn_repo_download.clicked.connect(self.download_repo)
+        self.ui.btn_doc_load.clicked.connect(self.load_doc)
+        self.ui.btn_doc_download.clicked.connect(self.download_doc)
 
     def update_config_state(self):
         access_token, user_agent, download_pic = store.load_config()

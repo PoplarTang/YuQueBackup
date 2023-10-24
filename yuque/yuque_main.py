@@ -140,8 +140,8 @@ class YuQueMain:
             worker.start_pool(self.save_repo, args=(namespace, ))
 
         # print("所有仓库保存成功")
-        if self.log_signal:
-            self.log_signal.emit("所有仓库保存成功")
+        # if self.log_signal:
+        #     self.log_signal.emit("所有仓库保存成功")
 
             # 根据详情repo_detail里的data/toc_yml进行分文件夹存储
             # docs = self.session.get_repo_docs(namespace)  # ------------> 获取仓库文档列表
