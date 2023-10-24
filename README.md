@@ -8,8 +8,11 @@
 
 - 一键备份所有仓库
 - 一键备份指定仓库
-- 一键备份制定文档
+- 一键备份指定文档
 
+![Alt text](images/image-1.png)
+
+![Alt text](images/image.png)
 
 #### 环境依赖
 - `yyaml`
