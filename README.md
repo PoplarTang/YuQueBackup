@@ -10,7 +10,6 @@
 - 一键备份指定仓库
 - 一键备份指定文档
 
-
 [v1.0客户端下载](https://gitee.com/tangyang/yu-que-backup/releases/tag/v1.0)
 目前只有Win版。Mac、Linux版客户端随后编好了就上传
 
@@ -18,10 +17,12 @@
 
 ![Alt text](images/image.png)
 
+====
+如果使用客户端，就不用下边的所有操作啦
+
 #### 环境依赖
 - `yyaml`
 - `requests`
-
 
 #### 安装教程
 
