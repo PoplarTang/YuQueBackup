@@ -5,12 +5,18 @@ from urllib import parse
 import requests
 from requests.cookies import RequestsCookieJar
 
+from loguru import logger
 
 class YuQueSession(requests.Session):
-    URL_BASE = "https://icheima.yuque.com/api/v2"
+    
+    URL_BASE = "https://xxx.yuque.com/api/v2"
+    
+    DOC_BASE_PATH = "https://www.yuque.com"
+    
     
     def __init__(self, token, user_agent, cookies=""):
         super().__init__()
+        self.URL_BASE = f"https://{user_agent}.yuque.com/api/v2"
         self.COOKIES = cookies
         self.token = token
         self.headers.update({
@@ -102,7 +108,9 @@ class YuQueSession(requests.Session):
         url = parse.urljoin(self.URL_BASE + "/repos/", namespace + "/docs/" + slug)
         resp = self.get(url, params={"raw": 1})  # raw raw=1 返回文档最原始的格式
         if resp.status_code != 200:
-            raise Exception("get repo detail failed, status_code: %s" % resp.status_code)
+            doc_path = f"{self.DOC_BASE_PATH}/{namespace}/{slug}"
+            logger.error(f"获取文档详情失败, 请检查以下链接是否可打开：\n{doc_path}")
+            raise Exception("获取文档详情失败，状态码: %s" % resp.status_code)
 
         # 将内容以良好的Json格式进行打印
         resp_json = resp.json()

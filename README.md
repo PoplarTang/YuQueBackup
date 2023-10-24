@@ -12,8 +12,8 @@
 
 
 #### 环境依赖
-- yyaml
-- requests
+- `yyaml`
+- `requests`
 
 
 #### 安装教程
@@ -33,7 +33,26 @@ pip install -r requirments.txt
 
 1. 安装Python环境
 2. 根据安装教程下载代码并安装依赖
-3. 使用如下命令备份仓库
+3. 在`secret.yaml`配置Token
+
+```yaml
+# 必选配置: 【账户设置】-【开发者】-【Token】-【新建】 参见https://www.yuque.com/yuque/developer
+ACCESS_TOKEN: ""
+USER_AGENT: ""
+# 可选配置，如果需要备份并下载图片，可添加此配置，需要从浏览器中拷贝
+COOKIES: ""
+```
+
+4. 使用如下命令备份仓库
+
+```shell
+# 备份所有仓库 
+python main.py
+# 备份单个仓库, 以icheima/stc8h为例
+python main.py icheima/stc8h
+# 备份单个文档，以icheima/python/dev_pygame_snake为例
+python main.py icheima/python/dev_pygame_snake
+```
 
 
 #### 开发计划

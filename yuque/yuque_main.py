@@ -48,8 +48,10 @@ def normalize_file_path(repo_name: str):
 
 class YuQueMain:
     
-    def __init__(self, yuque_token, user_agent, cookies=""):
-        self.session = YuQueSession(yuque_token, user_agent, cookies)
+    log_signal = None
+    
+    def __init__(self, access_token, user_agent, cookies=""):
+        self.session = YuQueSession(access_token, user_agent, cookies)
 
     def save_repo(self, namespace):
         repo_detail = self.session.get_repo_detail(namespace)  # --------------> 获取仓库详情
@@ -93,6 +95,8 @@ class YuQueMain:
             self.save_doc(namespace, slug, save_path)
 
         print("仓库保存成功：", repo_name)
+        if self.log_signal:
+            self.log_signal.emit("仓库保存成功：" + repo_name)
 
         return repo_path
 
@@ -131,11 +135,13 @@ class YuQueMain:
                 print("--> 跳过：", name, namespace, description)
                 continue
 
-            print(name, namespace, description)
+            print(name, namespace)
 
-            worker.start_pool(self.save_repo, args=(namespace,))
+            worker.start_pool(self.save_repo, args=(namespace, ))
 
-        print("所有仓库保存成功")
+        # print("所有仓库保存成功")
+        if self.log_signal:
+            self.log_signal.emit("所有仓库保存成功")
 
             # 根据详情repo_detail里的data/toc_yml进行分文件夹存储
             # docs = self.session.get_repo_docs(namespace)  # ------------> 获取仓库文档列表
@@ -205,10 +211,11 @@ class YuQueMain:
             
                 self.download_file(url, file_path)
 
-
         # html body_html
         # body_html = data["body_html"]
         # with open(os.path.join(save_path, f"{new_title}.html"), "w", encoding="utf-8") as f:
         #     f.write(body_html)
 
         print("\t-> DOC保存成功：", save_path)
+        if self.log_signal:
+            self.log_signal.emit(f"\t-> DOC保存成功:{save_path}")
