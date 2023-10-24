@@ -10,8 +10,9 @@
 - 一键备份指定仓库
 - 一键备份指定文档
 
-[v1.0客户端下载](https://gitee.com/tangyang/yu-que-backup/releases/tag/v1.0) 自己摸索着用，没空写教程。
-目前只有Win版。Mac、Linux版客户端随后编好了就上传
+[v1.0客户端下载](https://gitee.com/tangyang/yu-que-backup/releases/tag/v1.0) 
+
+功能简洁，自己摸索着用，空了写教程。目前只有Win版。Mac、Linux版客户端随后编好了就上传。
 
 ![Alt text](images/image-1.png)
 
