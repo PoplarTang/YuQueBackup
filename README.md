@@ -39,4 +39,4 @@ pip install -r requirments.txt
 #### 开发计划
 
 - 支持Linux配置定期备份计划
-- 支持桌面客户端操作（基于PyQt5)
+- 支持桌面客户端操作（基于PyQt5）
